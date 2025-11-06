@@ -1,6 +1,13 @@
 package org.emp.gl.core.launcher;
 
 import org.emp.gl.clients.Horloge ;
+import org.emp.gl.time.service.impl.DummyTimeServiceImpl;
+import org.emp.gl.timer.service.TimerService;
+
+import java.util.Random;
+
+import org.emp.gl.clients.CompteARebours;
+
 
 /**
  * Hello world!
@@ -9,16 +16,18 @@ import org.emp.gl.clients.Horloge ;
 public class App {
 
     public static void main(String[] args) {
+ 
+        TimerService timerService = new DummyTimeServiceImpl();
 
-        testDuTimeService();
-    }
+        Horloge h1 = new Horloge("Horloge-1", timerService);
 
-    private static void testDuTimeService() {
-        Horloge horloge = new Horloge("Num 1") ;
+        Random random = new Random();
+        for (int i = 1; i <= 10; i++) {
+            int val = 7 + random.nextInt(5);
+            new CompteARebours("Cpt-" + i, val, timerService);
+        }
     }
+      
+    
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
 }
